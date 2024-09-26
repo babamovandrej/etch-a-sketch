@@ -4,13 +4,8 @@
     --color-text-primary: #ffffff;
     --color-text-disabled: #d3d3d3;
     --color-grid-main: #f5f3f4;
-    --color-border-main: #b1a7a6;
-    --color-primary-dark: #e5383b;
-    --color-priamry-main: #ba181b;
-    --color-primary-dark:  #a4161a;
-    --color-secondary-dark: #0b090a;
-    --color-secondary-main: #161a1d;
-    --color-secondary-light: #660708;
+    --color-background-primary: #BFBDC1;
+    --color-border-main: #f5f3f4;
 }
 
 * {
@@ -22,7 +17,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: "Oswald", sans-serif;
-    background-color: var(--color-secondary-main);
+    background-color: var(--color-background-primary);
 }
 
 main {
@@ -31,13 +26,25 @@ main {
     margin: 0 auto;
     height: 100vh;
     justify-content: space-between;
-  }
-  
+}
 
 button {
     font: inherit;
     font-size: 32px;
     font-weight: 400;
-    border-radius: 10px;
     cursor: pointer;
+}
+
+input[type="color"] {
+	border: none;
+	width: 60px;
+	height: 60px;
+    margin: -5px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    border: none;
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
 }

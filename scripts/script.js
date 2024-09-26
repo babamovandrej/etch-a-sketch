@@ -5,6 +5,8 @@ class Grid {
         this.cols = cols;
         this.color = '#0b090a';
         this.isMouseDown = false;
+        this.isEraserActive = false;
+        this.isRainbowActive = false; 
         this.createGrid(this.rows, this.cols);
         this.addMouseEvents();
     }
@@ -14,7 +16,7 @@ class Grid {
         this.container.addEventListener('mouseup', () => this.isMouseDown = false);
         this.container.addEventListener('mouseleave', () => this.isMouseDown = false);
         this.container.addEventListener('mouseenter', (event) => {
-            if (event.buttons === 1) { 
+            if (event.buttons === 1) {
                 this.isMouseDown = true;
             }
         });
@@ -36,7 +38,6 @@ class Grid {
                 fragment.appendChild(cell);
             }
         }
-
         this.container.appendChild(fragment);
         this.addCellEventListeners();
     }
@@ -44,20 +45,31 @@ class Grid {
     addCellEventListeners() {
         const cells = this.container.querySelectorAll('.grid-cell');
         cells.forEach(cell => {
-            cell.addEventListener('mousedown', () => {
-                this.changeColor(cell);
-            });
-
+            cell.addEventListener('mousedown', () => this.handleCellInteraction(cell));
             cell.addEventListener('mousemove', () => {
-                if (this.isMouseDown) {
-                    this.changeColor(cell);
-                }
+                if (this.isMouseDown) this.handleCellInteraction(cell);
             });
         });
     }
 
+    handleCellInteraction(cell) {
+        if (this.isEraserActive) {
+            this.eraseColor(cell);
+        } else {
+            this.changeColor(cell);
+        }
+    }
+
+    eraseColor(cell) {
+        cell.style.background = 'transparent';
+    }
+
     changeColor(cell) {
-        cell.style.background = this.color;
+        if (this.isRainbowActive) {
+            cell.style.background = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        } else {
+            cell.style.background = this.color;
+        }
     }
 
     resizeGrid(newRows, newCols) {
@@ -71,6 +83,7 @@ class Grid {
     }
 
     resetGrid() {
+        this.isEraserActive = false;
         this.createGrid(this.rows, this.cols);
     }
 }
@@ -78,18 +91,19 @@ class Grid {
 document.addEventListener('DOMContentLoaded', () => {
     const grid = new Grid('.grid');
 
-    const colorPicker = document.getElementById('favcolor');
-    colorPicker.addEventListener('input', (event) => {
-        grid.setColor(event.target.value);
+    document.getElementById('rainbow').addEventListener('click', () => {
+        grid.isRainbowActive = !grid.isRainbowActive;
     });
 
-    const slider = document.getElementById('myRange');
-    slider.addEventListener('input', (event) => {
-        const size = parseInt(event.target.value);
-        grid.resizeGrid(size, size);
-    });
-
-    document.querySelector('.reset-button').addEventListener('click', () => {
+    document.getElementById('reset').addEventListener('click', () => {
         grid.resetGrid();
+    });
+
+    document.getElementById('eraser').addEventListener('click', () => {
+        grid.isEraserActive = !grid.isEraserActive;
+    });
+
+    document.getElementById('head').addEventListener('input', (event) => {
+        grid.setColor(event.target.value);
     });
 });

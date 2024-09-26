@@ -3,13 +3,23 @@
   align-items: center;
 }
 
-/* Colors Control */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
+.color-picker {
+  display: flex;
+  justify-content: center;
+}
+
+/* Grid  */
 .grid-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--color-secondary-main);
+  
 }
 
 .grid {
