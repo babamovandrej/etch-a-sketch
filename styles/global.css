@@ -4,8 +4,8 @@
     --color-text-primary: #ffffff;
     --color-text-disabled: #d3d3d3;
     --color-grid-main: #f5f3f4;
-    --color-background-primary: #BFBDC1;
-    --color-border-main: #f5f3f4;
+    --color-background-primary: #134074;
+    --color-border-main: #f5f3f4; 
 }
 
 * {
@@ -32,19 +32,19 @@ button {
     font: inherit;
     font-size: 32px;
     font-weight: 400;
+    padding: 8px 16px;
     cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 
+    0 12px 40px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-background-primary);
+    border-radius: 5px;
+    border: none;
+    color: var(--color-text-primary);
 }
 
-input[type="color"] {
-	border: none;
-	width: 60px;
-	height: 60px;
-    margin: -5px;
+button:hover {
+    transform: scale(1.05);
+    transition: cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+
 }
-input[type="color"]::-webkit-color-swatch-wrapper {
-    border: none;
-	padding: 0;
-}
-input[type="color"]::-webkit-color-swatch {
-	border: none;
-}
+
