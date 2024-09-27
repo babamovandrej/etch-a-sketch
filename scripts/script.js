@@ -135,16 +135,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (value) {
             case 1:
-                newRows = newCols = 8;
+                newRows = newCols = 4;
                 break;
             case 2:
-                newRows = newCols = 16;
+                newRows = newCols = 8;
                 break;
             case 3:
+                newRows = newCols = 16;
+                break;
+            case 4:
                 newRows = newCols = 32;
                 break;
             default:
-                newRows = newCols = 16;
+                newRows = newCols = 64;
         }
 
         grid.resizeGrid(newRows, newCols);
