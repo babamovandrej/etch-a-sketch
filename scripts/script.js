@@ -3,7 +3,7 @@ class Grid {
         this.container = document.querySelector(containerSelector);
         this.rows = rows;
         this.cols = cols;
-        this.color = '#0b090a';
+        this.color = '#134074';
         this.isMouseDown = false;
         this.isEraserActive = false;
         this.isRainbowActive = false; 
@@ -80,11 +80,18 @@ class Grid {
 
     setColor(color) {
         this.color = color;
+        this.isEraserActive = false; 
+        this.isRainbowActive = false; 
+        document.getElementById('eraser').classList.remove('active');
+        document.getElementById('rainbow').classList.remove('active');
     }
 
     resetGrid() {
         this.isEraserActive = false;
+        this.isRainbowActive = false;
         this.createGrid(this.rows, this.cols);
+        document.getElementById('eraser').classList.remove('active');
+        document.getElementById('rainbow').classList.remove('active');
     }
 }
 
@@ -93,6 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('rainbow').addEventListener('click', () => {
         grid.isRainbowActive = !grid.isRainbowActive;
+        if (grid.isRainbowActive) {
+            grid.isEraserActive = false;
+            document.getElementById('eraser').classList.remove('active');
+            document.getElementById('rainbow').classList.add('active');
+        } else {
+            document.getElementById('rainbow').classList.remove('active');
+        }
     });
 
     document.getElementById('reset').addEventListener('click', () => {
@@ -101,9 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('eraser').addEventListener('click', () => {
         grid.isEraserActive = !grid.isEraserActive;
+        if (grid.isEraserActive) {
+            grid.isRainbowActive = false;
+            document.getElementById('rainbow').classList.remove('active');
+            document.getElementById('eraser').classList.add('active');
+        } else {
+            document.getElementById('eraser').classList.remove('active');
+        }
     });
 
     document.getElementById('head').addEventListener('input', (event) => {
         grid.setColor(event.target.value);
     });
+
+    document.getElementById('range-input').addEventListener('input', (event) => {
+        const value = parseInt(event.target.value);
+        let newRows = grid.rows;
+        let newCols = grid.cols;
+
+        if (value === 1) {
+            newRows = 8;
+            newCols = 8;
+        } else if (value === 2) {
+            newRows = 16;
+            newCols = 16;
+        } else {
+            newRows = 32;
+            newCols = 32;
+        }
+
+        grid.resizeGrid(newRows, newCols);
+    }) 
 });
