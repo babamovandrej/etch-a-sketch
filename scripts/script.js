@@ -6,7 +6,11 @@ class Grid {
         this.color = '#134074';
         this.isMouseDown = false;
         this.isEraserActive = false;
-        this.isRainbowActive = false; 
+        this.isRainbowActive = false;
+        this.init();
+    }
+
+    init() {
         this.createGrid(this.rows, this.cols);
         this.addMouseEvents();
     }
@@ -34,7 +38,6 @@ class Grid {
                 cell.style.width = `${boxSize}px`;
                 cell.style.height = `${boxSize}px`;
                 cell.style.boxSizing = 'border-box';
-
                 fragment.appendChild(cell);
             }
         }
@@ -65,11 +68,7 @@ class Grid {
     }
 
     changeColor(cell) {
-        if (this.isRainbowActive) {
-            cell.style.background = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        } else {
-            cell.style.background = this.color;
-        }
+        cell.style.background = this.isRainbowActive ? `#${Math.floor(Math.random() * 16777215).toString(16)}` : this.color;
     }
 
     resizeGrid(newRows, newCols) {
@@ -80,18 +79,21 @@ class Grid {
 
     setColor(color) {
         this.color = color;
-        this.isEraserActive = false; 
-        this.isRainbowActive = false; 
-        document.getElementById('eraser').classList.remove('active');
-        document.getElementById('rainbow').classList.remove('active');
+        this.isEraserActive = false;
+        this.isRainbowActive = false;
+        this.updateButtonStates();
     }
 
     resetGrid() {
         this.isEraserActive = false;
         this.isRainbowActive = false;
         this.createGrid(this.rows, this.cols);
-        document.getElementById('eraser').classList.remove('active');
-        document.getElementById('rainbow').classList.remove('active');
+        this.updateButtonStates();
+    }
+
+    updateButtonStates() {
+        document.getElementById('eraser').classList.toggle('active', this.isEraserActive);
+        document.getElementById('rainbow').classList.toggle('active', this.isRainbowActive);
     }
 }
 
@@ -102,11 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.isRainbowActive = !grid.isRainbowActive;
         if (grid.isRainbowActive) {
             grid.isEraserActive = false;
-            document.getElementById('eraser').classList.remove('active');
-            document.getElementById('rainbow').classList.add('active');
-        } else {
-            document.getElementById('rainbow').classList.remove('active');
         }
+        grid.updateButtonStates();
     });
 
     document.getElementById('reset').addEventListener('click', () => {
@@ -117,33 +116,37 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.isEraserActive = !grid.isEraserActive;
         if (grid.isEraserActive) {
             grid.isRainbowActive = false;
-            document.getElementById('rainbow').classList.remove('active');
-            document.getElementById('eraser').classList.add('active');
-        } else {
-            document.getElementById('eraser').classList.remove('active');
         }
+        grid.updateButtonStates();
     });
 
-    document.getElementById('head').addEventListener('input', (event) => {
+    const colorPicker = document.getElementById('head');
+    colorPicker.addEventListener('input', (event) => {
         grid.setColor(event.target.value);
+    });
+
+    colorPicker.addEventListener('click', () => {
+        grid.setColor(colorPicker.value);
     });
 
     document.getElementById('range-input').addEventListener('input', (event) => {
         const value = parseInt(event.target.value);
-        let newRows = grid.rows;
-        let newCols = grid.cols;
+        let newRows, newCols;
 
-        if (value === 1) {
-            newRows = 8;
-            newCols = 8;
-        } else if (value === 2) {
-            newRows = 16;
-            newCols = 16;
-        } else {
-            newRows = 32;
-            newCols = 32;
+        switch (value) {
+            case 1:
+                newRows = newCols = 8;
+                break;
+            case 2:
+                newRows = newCols = 16;
+                break;
+            case 3:
+                newRows = newCols = 32;
+                break;
+            default:
+                newRows = newCols = 16;
         }
 
         grid.resizeGrid(newRows, newCols);
-    }) 
+    });
 });

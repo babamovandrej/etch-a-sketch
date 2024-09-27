@@ -1,3 +1,4 @@
+
 .controls-container {
   display: flex;
   align-items: center;
@@ -10,10 +11,10 @@
   background-color: var(--color-text-primary);
   height: 600px;
   width: 250px;
-  padding: 0px 42px;
+  padding: 0 42px;
   border-radius: 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), 
-  0 12px 40px rgba(0, 0, 0, 0.4);
+              0 12px 40px rgba(0, 0, 0, 0.4);
   gap: 1rem;
 }
 
@@ -22,7 +23,6 @@
   justify-content: center;
 }
 
-/* Grid  */
 .grid-container {
   display: flex;
   justify-content: center;
@@ -37,19 +37,16 @@
   flex-wrap: wrap;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), 
-  0 12px 40px rgba(0, 0, 0, 0.4);
+              0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .grid-cell {
-  border: .1px solid var(--color-border-main);
+  border: 0.1px solid var(--color-border-main);
   border-radius: 5px;
 }
 
-
 .color-input {
   -webkit-appearance: none;
-  appearance: none;
-  -moz-appearance: none;
   appearance: none;
   width: 100px;
   height: 100px;
@@ -73,7 +70,6 @@
   background-color: var(--color-active-main);
 }
 
-
 .slider {
   -webkit-appearance: none;
   appearance: none;
@@ -81,8 +77,7 @@
   height: 30px;
   background: #d3d3d3;
   outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
 
 .slider::-webkit-slider-thumb {
@@ -99,9 +94,6 @@
   height: 30px;
   cursor: pointer;
 }
-
-
-
 
 
 
